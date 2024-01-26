@@ -97,8 +97,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4b9a2d3935492f4cb332bef7169b7a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: {x: -1, y: 0, z: 0}
+  movementSpeed: {x: -1.5, y: 0, z: 0}
   <selfRef>k__BackingField: {fileID: 2828231873671256790}
+  <value>k__BackingField: 0
   leftBoundary: {fileID: 0}
   rightBoundary: {fileID: 0}
   spriteRef: {fileID: 2828231873671256777}
+  icons:
+  - {fileID: 21300000, guid: c5c867e9976dc5d4a8803e01578752f5, type: 3}
+  - {fileID: 21300000, guid: 85a96536cdeba7e46b4a254c6c705151, type: 3}
+  - {fileID: 21300000, guid: 5dec73e9ae51f4f449835068fa42ab0e, type: 3}
+  - {fileID: 21300000, guid: de328077ad8c9594c9ec3cf1023b25fe, type: 3}

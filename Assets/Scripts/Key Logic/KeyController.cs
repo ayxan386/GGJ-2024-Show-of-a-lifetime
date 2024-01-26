@@ -8,12 +8,20 @@ public class KeyController : MonoBehaviour
     [SerializeField] private Transform leftBoundary;
     [SerializeField] private Transform rightBoundary;
     [SerializeField] private SpriteRenderer spriteRef;
+    [SerializeField] private Sprite[] icons;
 
     public KeyState State { get; set; } = KeyState.Waiting;
+    public float MovementFactor { get; set; }
+
+    public void SetValue(KeyValue newVal)
+    {
+        value = newVal;
+        spriteRef.sprite = icons[(int)value];
+    }
 
     public void Move()
     {
-        selfRef.Translate(movementSpeed * Time.deltaTime);
+        selfRef.Translate(movementSpeed * (Time.deltaTime * MovementFactor));
     }
 
     public void Perfect()

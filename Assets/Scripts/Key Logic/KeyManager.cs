@@ -1,14 +1,20 @@
 using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class KeyManager : MonoBehaviour
 {
-    [SerializeField] private float spawnRate;
+    [Header("Key spawning")]
     [SerializeField] private KeyController keyPrefab;
     [SerializeField] private List<KeyController> keys;
     [SerializeField] private Transform keyParent;
+
+    [Header("Game stages")]
+    [SerializeField] private List<GameStages> gameStages;
 
     [Header("Key detection")]
     [SerializeField] private Transform checkPoint;
@@ -20,19 +26,32 @@ public class KeyManager : MonoBehaviour
     [SerializeField] private int passableScore;
     [SerializeField] private int punishmentScore;
 
+    [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private Image satisfactionBar;
+    [SerializeField] private int scoreMapper = 300;
+    [SerializeField] private Color[] barColors;
+
     private float lastSpawnTime = 0;
+    private int currentStage;
     private KeyController currentKey;
 
-    public int Score { get; private set; }
+    public int Score { get; private set; } = 100;
 
     private void Awake()
     {
         keys = new List<KeyController>();
     }
 
-    void Update()
+    private void Start()
     {
-        if (lastSpawnTime + spawnRate < Time.time)
+        UpdateScore(0);
+    }
+
+    private void Update()
+    {
+        var gameStage = gameStages[currentStage];
+        
+        if (lastSpawnTime +  gameStage.spawnRate < Time.time)
         {
             SpawnKey();
         }
@@ -47,6 +66,15 @@ public class KeyManager : MonoBehaviour
             var leadingKey = keys[0];
 
             CheckKey(leadingKey);
+        }
+
+        if (Score >= gameStage.transitionScore && currentStage + 1 < gameStages.Count)
+        {
+            currentStage++;
+            foreach (var key in keys)
+            {
+                key.MovementFactor = gameStages[currentStage].movementMult;
+            }
         }
     }
 
@@ -66,6 +94,7 @@ public class KeyManager : MonoBehaviour
             else if (leadingKey.selfRef.position.x < checkPoint.position.x)
             {
                 leadingKey.TooLate();
+                UpdateScore(punishmentScore);
                 RemoveKey(leadingKey);
             }
         }
@@ -81,6 +110,8 @@ public class KeyManager : MonoBehaviour
     private void SpawnKey()
     {
         var newKey = Instantiate(keyPrefab, keyParent);
+        newKey.SetValue((KeyValue)Random.Range(0, gameStages[currentStage].numberOfKeys));
+        newKey.MovementFactor = gameStages[currentStage].movementMult;
         keys.Add(newKey);
         lastSpawnTime = Time.time;
     }
@@ -136,13 +167,12 @@ public class KeyManager : MonoBehaviour
             case KeyState.Waiting:
                 break;
             case KeyState.Passable:
-                Score += passableScore;
+                UpdateScore(passableScore);
                 break;
             case KeyState.Perfect:
-                Score += perfectScore;
+                UpdateScore(perfectScore);
                 break;
             case KeyState.Late:
-                Score += punishmentScore;
                 break;
             default:
                 throw new ArgumentOutOfRangeException();
@@ -150,4 +180,39 @@ public class KeyManager : MonoBehaviour
 
         RemoveKey(currentKey);
     }
+
+
+    private void UpdateScore(int diff)
+    {
+        Score += diff;
+        scoreText.text = Score + "";
+        var fraction = 1f * Score / scoreMapper;
+        satisfactionBar.fillAmount = fraction;
+        
+        if(fraction <= 0.3f)
+        {
+            satisfactionBar.color = barColors[0];
+        }
+        else if (fraction <= 0.6f)
+        {
+            satisfactionBar.color = barColors[1];
+        }
+        else if (fraction <= 0.8f)
+        {
+            satisfactionBar.color = barColors[2];
+        }
+        else 
+        {
+            satisfactionBar.color = barColors[3];
+        }
+    }
+}
+
+[Serializable]
+public class GameStages
+{
+    public int numberOfKeys;
+    public float spawnRate;
+    public float movementMult = 1;
+    public int transitionScore;
 }
