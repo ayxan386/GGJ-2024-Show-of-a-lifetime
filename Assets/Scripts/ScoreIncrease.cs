@@ -26,7 +26,9 @@ public class ScoreIncrease : MonoBehaviour
 
     public void UpdateScore()
     {
-        leaderBoardManager.LoadLeaderboard();
+        LeaderboardEntry entry = new LeaderboardEntry();
+        entry.score = score;
+       
         leaderBoardManager.AddScoreToLeaderboard(score);
     }
 }

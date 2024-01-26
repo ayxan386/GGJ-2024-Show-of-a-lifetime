@@ -10,17 +10,27 @@ using UnityEngine.UI;
         public string playerName;
         public int score;
     }
+    [System.Serializable]
+    public class LeaderboardJSon
+    {
+
+        public List<LeaderboardEntry> leaderboardEntries;
+    }
 public class LeaderBoardManager : MonoBehaviour
 {
     public TMP_InputField playerNameInput;
     public TextMeshProUGUI leaderboardText;
+    LeaderboardJSon leaderboardJSon = new LeaderboardJSon();
 
-    private List<LeaderboardEntry> leaderboardEntries = new List<LeaderboardEntry>();
+    private void Awake()
+    {
+        LoadLeaderboard();
+    }
     // Start is called before the first frame update
     private void Start()
     {
-        // Load leaderboard data
-        LoadLeaderboard();
+        // Load leaderboard data when the game starts
+        
         UpdateLeaderboardUI();
     }
 
@@ -32,10 +42,10 @@ public class LeaderBoardManager : MonoBehaviour
         entry.score = score;
 
         // Add the entry to the leaderboard
-        leaderboardEntries.Add(entry);
+        leaderboardJSon.leaderboardEntries.Add(entry);
 
         // Sort the leaderboard by score (descending)
-        leaderboardEntries.Sort((a, b) => b.score.CompareTo(a.score));
+        leaderboardJSon.leaderboardEntries.Sort((a, b) => b.score.CompareTo(a.score));
 
         // Update the UI
         UpdateLeaderboardUI();
@@ -46,28 +56,28 @@ public class LeaderBoardManager : MonoBehaviour
 
     private void UpdateLeaderboardUI()
     {
-        leaderboardText.text = "Leaderboard:\n";
+       
 
         // Display only the top 10 entries or less if there are fewer entries
-        int numEntriesToShow = Mathf.Min(leaderboardEntries.Count, 10);
+        int numEntriesToShow = Mathf.Min(leaderboardJSon.leaderboardEntries.Count, 10);
         for (int i = 0; i < numEntriesToShow; i++)
         {
-            leaderboardText.text += leaderboardEntries[i].playerName + ": " + leaderboardEntries[i].score + "\n";
+            leaderboardText.text += leaderboardJSon.leaderboardEntries[i].playerName + ": " + leaderboardJSon.leaderboardEntries[i].score + "\n";
         }
     }
 
-    public void LoadLeaderboard()
+    private void LoadLeaderboard()
     {
         string json = PlayerPrefs.GetString("Leaderboard", "");
         if (!string.IsNullOrEmpty(json))
         {
-            leaderboardEntries = JsonUtility.FromJson<List<LeaderboardEntry>>(json);
+            leaderboardJSon = JsonUtility.FromJson<LeaderboardJSon>(json);
         }
     }
 
     private void SaveLeaderboard()
     {
-        string json = JsonUtility.ToJson(leaderboardEntries);
+        string json = JsonUtility.ToJson(leaderboardJSon);
         PlayerPrefs.SetString("Leaderboard", json);
         PlayerPrefs.Save();
     }
