@@ -1032,7 +1032,7 @@ MonoBehaviour:
     m_ActionId: 63cc17bf-383a-4ab3-a23f-93a12c43ba52
     m_ActionName: Player/RightKey[/Keyboard/d]
   m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_DefaultControlScheme: KeyboardAndMouse
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
