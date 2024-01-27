@@ -36,6 +36,9 @@ public class KeyManager : MonoBehaviour
     [SerializeField] private float difficultyFactor = 1f;
     [SerializeField] private float lossingFraction;
 
+    [Header("SFX")]
+    [SerializeField] private AudioClip[] keySounds;
+
     private float lastSpawnTime = 0;
     public int currentStage { get; private set; }
     public bool RoundEnded { get; set; }
@@ -44,6 +47,7 @@ public class KeyManager : MonoBehaviour
     public int Score { get; private set; } = 100;
     public int RoundMaxScore { get; private set; } = 100;
     private int currentCombo = 0;
+    private int soundIndex;
 
     public static KeyManager Instance { get; private set; }
     
@@ -186,9 +190,11 @@ public class KeyManager : MonoBehaviour
             case KeyState.Waiting:
                 break;
             case KeyState.Passable:
+                PlayKeySound();
                 UpdateScore(passableScore);
                 break;
             case KeyState.Perfect:
+                PlayKeySound();
                 UpdateScore(perfectScore);
                 break;
             case KeyState.Late:
@@ -198,6 +204,12 @@ public class KeyManager : MonoBehaviour
         }
 
         RemoveKey(currentKey);
+    }
+
+    private void PlayKeySound()
+    {
+        AudioSource.PlayClipAtPoint(keySounds[soundIndex], Vector3.zero);
+        soundIndex = 1 - soundIndex;
     }
 
 
