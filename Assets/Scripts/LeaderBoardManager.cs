@@ -1,40 +1,30 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
-using UnityEngine.Events;
+using UnityEngine;
 
-    [System.Serializable]
-    public class LeaderboardEntry
-    {
-        public string playerName;
-        public int score;
-    }
-    [System.Serializable]
-    public class LeaderboardJSon
-    {
+[Serializable]
+public class LeaderboardEntry
+{
+    public string playerName;
+    public int score;
+}
 
-        public List<LeaderboardEntry> leaderboardEntries;
-    }
+[Serializable]
+public class LeaderboardJSon
+{
+    public List<LeaderboardEntry> leaderboardEntries;
+}
+
 public class LeaderBoardManager : MonoBehaviour
 {
     public TMP_InputField playerNameInput;
     public TextMeshProUGUI leaderboardText;
     LeaderboardJSon leaderboardJSon = new LeaderboardJSon();
 
-    
-
     private void Awake()
     {
         LoadLeaderboard();
-    }
-    // Start is called before the first frame update
-    private void Start()
-    {
-        // Load leaderboard data when the game starts
-        
-        UpdateLeaderboardUI();
     }
 
     public void AddScoreToLeaderboard(int score)
@@ -59,13 +49,13 @@ public class LeaderBoardManager : MonoBehaviour
 
     private void UpdateLeaderboardUI()
     {
-       
-
         // Display only the top 10 entries or less if there are fewer entries
+        leaderboardText.text = "";
         int numEntriesToShow = Mathf.Min(leaderboardJSon.leaderboardEntries.Count, 10);
         for (int i = 0; i < numEntriesToShow; i++)
         {
-            leaderboardText.text += leaderboardJSon.leaderboardEntries[i].playerName + ": " + leaderboardJSon.leaderboardEntries[i].score + "\n";
+            leaderboardText.text += leaderboardJSon.leaderboardEntries[i].playerName + ": " +
+                                    leaderboardJSon.leaderboardEntries[i].score + "\n";
         }
     }
 
@@ -75,6 +65,10 @@ public class LeaderBoardManager : MonoBehaviour
         if (!string.IsNullOrEmpty(json))
         {
             leaderboardJSon = JsonUtility.FromJson<LeaderboardJSon>(json);
+        }
+        else
+        {
+            leaderboardJSon.leaderboardEntries = new List<LeaderboardEntry>();
         }
     }
 

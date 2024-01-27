@@ -17,20 +17,10 @@ public class ScoreIncrease : MonoBehaviour
     void OnRoundEnd(int score)
     {
         this.score = score;
-        UpdateScore();
-    }
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     public void UpdateScore()
     {
-        
-        LeaderboardEntry entry = new LeaderboardEntry();
-        entry.score = score;
-       
         leaderBoardManager.AddScoreToLeaderboard(score);
     }
 }
