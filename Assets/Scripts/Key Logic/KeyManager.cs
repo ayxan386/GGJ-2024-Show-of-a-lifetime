@@ -43,6 +43,7 @@ public class KeyManager : MonoBehaviour
 
     public int Score { get; private set; } = 100;
     public int RoundMaxScore { get; private set; } = 100;
+    private int currentCombo = 0;
 
     public static KeyManager Instance { get; private set; }
     
@@ -206,11 +207,12 @@ public class KeyManager : MonoBehaviour
         
         Score += diff;
         RoundMaxScore = Mathf.Max(Score, RoundMaxScore);
+        currentCombo = diff != 0 && Score == RoundMaxScore ? currentCombo + 1 : 0;
         scoreText.text = "Max score: " + RoundMaxScore;
         var fraction = 1f * Score / RoundMaxScore - lossingFraction;
-        satisfactionBar.fillAmount = fraction;
+        satisfactionBar.fillAmount = fraction + 0.05f * currentCombo;
 
-        UpdateEmojis(fraction);
+        UpdateEmojis(satisfactionBar.fillAmount);
         
 
         if (fraction <= 0)
@@ -227,13 +229,13 @@ public class KeyManager : MonoBehaviour
 
     private void UpdateEmojis(float fraction)
     {
-        var inc = 1f / barSpites.Length;
+        var inc = 1f / (barSpites.Length - 1);
         var currentOne = -1;
         for (int i = 0; i < emojis.Length; i++)
         {
             emojis[i].sprite = blankEmoji[i];
 
-            if (inc * i <= fraction)
+            if (inc * i <= fraction && fraction <= (i + 1) * inc)
             {
                 currentOne = i;
             }
