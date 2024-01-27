@@ -32,6 +32,7 @@ public class KeyManager : MonoBehaviour
     [SerializeField] private Image satisfactionBar;
     [SerializeField] private int scoreMapper = 300;
     [SerializeField] private Color[] barColors;
+    [SerializeField] private float difficultyFactor = 1f;
 
     private float lastSpawnTime = 0;
     public int currentStage { get; private set; }
@@ -56,7 +57,7 @@ public class KeyManager : MonoBehaviour
     {
         var gameStage = gameStages[currentStage];
 
-        if (lastSpawnTime + gameStage.spawnRate < Time.time)
+        if (lastSpawnTime + gameStage.spawnRate / difficultyFactor < Time.time)
         {
             SpawnKey();
         }
@@ -78,7 +79,7 @@ public class KeyManager : MonoBehaviour
             currentStage++;
             foreach (var key in keys)
             {
-                key.MovementFactor = gameStages[currentStage].movementMult;
+                key.MovementFactor = gameStages[currentStage].movementMult * difficultyFactor;
             }
         }
     }
@@ -116,7 +117,7 @@ public class KeyManager : MonoBehaviour
     {
         var newKey = Instantiate(keyPrefab, keyParent);
         newKey.SetValue((KeyValue)Random.Range(0, gameStages[currentStage].numberOfKeys));
-        newKey.MovementFactor = gameStages[currentStage].movementMult;
+        newKey.MovementFactor = gameStages[currentStage].movementMult * difficultyFactor;
         keys.Add(newKey);
         lastSpawnTime = Time.time;
     }
@@ -214,6 +215,11 @@ public class KeyManager : MonoBehaviour
         else
         {
             satisfactionBar.color = barColors[3];
+        }
+
+        if (Score > 300)
+        {
+            difficultyFactor = Mathf.Pow(1.01f, (Score - 300) / 10);
         }
     }
 }

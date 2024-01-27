@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4b9a2d3935492f4cb332bef7169b7a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: {x: -1.5, y: 0, z: 0}
+  movementSpeed: {x: -1.75, y: 0, z: 0}
   <selfRef>k__BackingField: {fileID: 2828231873671256790}
   <value>k__BackingField: 0
   leftBoundary: {fileID: 0}

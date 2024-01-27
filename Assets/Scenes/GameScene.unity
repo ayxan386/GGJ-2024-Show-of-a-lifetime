@@ -638,6 +638,14 @@ MonoBehaviour:
     spawnRate: 1
     movementMult: 2
     transitionScore: 160
+  - numberOfKeys: 4
+    spawnRate: 0.9
+    movementMult: 2.2
+    transitionScore: 200
+  - numberOfKeys: 4
+    spawnRate: 0.8
+    movementMult: 2.4
+    transitionScore: 240
   checkPoint: {fileID: 37161509}
   perfectKeyDistance: 0.4
   perfectScore: 3
@@ -1102,20 +1110,28 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemPrefab: {fileID: 6111012458800440988, guid: a187e7dd0af88b84cbdc70e80af5d63c, type: 3}
   gameStages:
-  - numberOfKeys: 0
-    spawnRate: 2
+  - numberOfKeys: 1
+    spawnRate: 1.6
     movementMult: 1
     transitionScore: 0
-  - numberOfKeys: 0
-    spawnRate: 1.8
+  - numberOfKeys: 1
+    spawnRate: 1.4
     movementMult: 1.1
     transitionScore: 0
-  - numberOfKeys: 0
-    spawnRate: 1.6
+  - numberOfKeys: 2
+    spawnRate: 1.2
     movementMult: 1.3
     transitionScore: 0
-  - numberOfKeys: 0
-    spawnRate: 1.4
+  - numberOfKeys: 2
+    spawnRate: 1
+    movementMult: 1.5
+    transitionScore: 0
+  - numberOfKeys: 3
+    spawnRate: 0.8
+    movementMult: 1.5
+    transitionScore: 0
+  - numberOfKeys: 3
+    spawnRate: 0.6
     movementMult: 1.5
     transitionScore: 0
   leftLimit: {fileID: 1686621496}
