@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
     [System.Serializable]
     public class LeaderboardEntry
@@ -21,6 +22,8 @@ public class LeaderBoardManager : MonoBehaviour
     public TMP_InputField playerNameInput;
     public TextMeshProUGUI leaderboardText;
     LeaderboardJSon leaderboardJSon = new LeaderboardJSon();
+
+    
 
     private void Awake()
     {

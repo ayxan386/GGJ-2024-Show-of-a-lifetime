@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ScoreIncrease : MonoBehaviour
 {
@@ -11,21 +12,22 @@ public class ScoreIncrease : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        KeyManager.OnRoundEnd += OnRoundEnd;
     }
-
+    void OnRoundEnd(int score)
+    {
+        this.score = score;
+        UpdateScore();
+    }
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            score++;
-        }
-        scoreTxt.text = score.ToString();
+
     }
 
     public void UpdateScore()
     {
+        
         LeaderboardEntry entry = new LeaderboardEntry();
         entry.score = score;
        
