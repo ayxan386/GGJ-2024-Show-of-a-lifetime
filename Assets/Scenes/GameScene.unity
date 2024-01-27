@@ -655,12 +655,13 @@ MonoBehaviour:
   itemCollisionScore: -0.1
   scoreText: {fileID: 302696646}
   satisfactionBar: {fileID: 73264314}
-  scoreMapper: 300
   barColors:
   - {r: 1, g: 0, b: 0, a: 1}
   - {r: 1, g: 0.4941396, b: 0, a: 1}
   - {r: 1, g: 0.9648032, b: 0, a: 1}
   - {r: 0.2274208, g: 1, b: 0, a: 1}
+  difficultyFactor: 1
+  lossingFraction: 0.45
 --- !u!1 &800191269
 GameObject:
   m_ObjectHideFlags: 0

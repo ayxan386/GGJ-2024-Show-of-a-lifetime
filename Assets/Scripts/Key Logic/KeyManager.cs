@@ -30,17 +30,20 @@ public class KeyManager : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private Image satisfactionBar;
-    [SerializeField] private int scoreMapper = 300;
     [SerializeField] private Color[] barColors;
     [SerializeField] private float difficultyFactor = 1f;
+    [SerializeField] private float lossingFraction;
 
     private float lastSpawnTime = 0;
     public int currentStage { get; private set; }
     private KeyController currentKey;
 
     public int Score { get; private set; } = 100;
+    public int RoundMaxScore { get; private set; } = 100;
 
     public static KeyManager Instance { get; private set; }
+    
+    public static event Action<int> OnRoundEnd; 
 
     private void Awake()
     {
@@ -196,8 +199,9 @@ public class KeyManager : MonoBehaviour
     private void UpdateScore(int diff)
     {
         Score += diff;
-        scoreText.text = Score + "";
-        var fraction = 1f * Score / scoreMapper;
+        RoundMaxScore = Mathf.Max(Score, RoundMaxScore);
+        scoreText.text = "Max score: " + RoundMaxScore;
+        var fraction = 1f * Score / RoundMaxScore;
         satisfactionBar.fillAmount = fraction;
 
         if (fraction <= 0.3f)
@@ -215,6 +219,11 @@ public class KeyManager : MonoBehaviour
         else
         {
             satisfactionBar.color = barColors[3];
+        }
+
+        if (fraction <= lossingFraction)
+        {
+            OnRoundEnd?.Invoke(RoundMaxScore);
         }
 
         if (Score > 300)
