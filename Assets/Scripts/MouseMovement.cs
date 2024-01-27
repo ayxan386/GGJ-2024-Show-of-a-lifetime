@@ -5,12 +5,13 @@ using UnityEngine;
 
 public class MouseMovement : MonoBehaviour
 {
-    [SerializeField] float moveSpeed = 5f;
+    [SerializeField] float moveSpeed = 15f;
     private float spriteWidth;
     private float spriteHeight;
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.visible = false;
         spriteWidth = GetComponent<SpriteRenderer>().bounds.extents.x;
         spriteHeight = GetComponent<SpriteRenderer>().bounds.extents.y;
     }
@@ -28,7 +29,7 @@ public class MouseMovement : MonoBehaviour
                         Camera.main.ScreenToWorldPoint(new Vector3(0f, Screen.height, 0f)).y - spriteHeight),
             0f
         );
-        transform.position = Vector3.MoveTowards(transform.position, clampedPosition, moveSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, clampedPosition, moveSpeed * Time.deltaTime);
 
 
     }
