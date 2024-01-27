@@ -21,21 +21,46 @@ public class MouseMovement : MonoBehaviour
     void Update()
     {
         var newPos = transform.position;
+        Vector3 mouseWorldPos = GetMouseWorldPosition();
+
         if (isGamepad)
         {
             newPos.x += delta.x * moveSpeed * Time.deltaTime;
         }
         else
         {
-            var inWorldPos = mainCamera.ScreenToWorldPoint(mousePos);
-            inWorldPos.z = startPos.z;
-            inWorldPos.y = startPos.y;
-            newPos = Vector3.MoveTowards(transform.position, inWorldPos, moveSpeed);
+            if (mouseWorldPos != Vector3.zero)
+            {
+                newPos = Vector3.MoveTowards(transform.position, mouseWorldPos, moveSpeed);
+            }
+            //    var inWorldPos = mainCamera.ScreenToWorldPoint(mousePos);
+            //    inWorldPos.z = startPos.z;
+            //    inWorldPos.y = startPos.y;
+            //    newPos = Vector3.MoveTowards(transform.position, inWorldPos, moveSpeed);
         }
 
         newPos.x = Mathf.Clamp(newPos.x, leftLimit.position.x, rightLimit.position.x);
 
         transform.position = newPos;
+    }
+
+    private Vector3 GetMouseWorldPosition()
+    {
+        Vector3 mouseWorldPos = Vector3.zero;
+
+        if (mainCamera != null)
+        {
+            mousePos = Mouse.current.position.ReadValue();
+            mouseWorldPos = mainCamera.ScreenToWorldPoint(mousePos);
+            mouseWorldPos.y = startPos.y;
+            mouseWorldPos.z = startPos.z;
+        }
+        else
+        {
+            Debug.LogWarning("Main camera reference not set!");
+        }
+
+        return mouseWorldPos;
     }
 
     public void DeviceChanged(PlayerInput ctx)
@@ -46,6 +71,7 @@ public class MouseMovement : MonoBehaviour
     public void OnMousePosPass(InputAction.CallbackContext ctx)
     {
         mousePos = ctx.ReadValue<Vector2>();
+        Debug.Log(mousePos);
     }
 
     public void OnLeftStickPass(InputAction.CallbackContext ctx)
