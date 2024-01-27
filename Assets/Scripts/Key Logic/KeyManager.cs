@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -39,6 +40,8 @@ public class KeyManager : MonoBehaviour
     [Header("SFX")]
     [SerializeField] private AudioClip[] keySounds;
 
+    [SerializeField] private Animator axeAnimator;
+    
     private float lastSpawnTime = 0;
     public int currentStage { get; private set; }
     public bool RoundEnded { get; set; }
@@ -230,13 +233,20 @@ public class KeyManager : MonoBehaviour
         if (fraction <= 0)
         {
             RoundEnded = true;
-            OnRoundEnd?.Invoke(RoundMaxScore);
+            StartCoroutine(EndRound());
         }
 
         if (Score > 300)
         {
             difficultyFactor = Mathf.Pow(1.01f, (Score - 300) / 10);
         }
+    }
+
+    private IEnumerator EndRound()
+    {
+        axeAnimator.SetTrigger("fall");
+        yield return new WaitForSeconds(1.5f);
+        OnRoundEnd?.Invoke(RoundMaxScore);
     }
 
     private void UpdateEmojis(float fraction)
