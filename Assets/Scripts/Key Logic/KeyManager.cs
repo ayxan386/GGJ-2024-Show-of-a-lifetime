@@ -10,6 +10,7 @@ public class KeyManager : MonoBehaviour
 {
     [Header("Key spawning")]
     [SerializeField] private KeyController keyPrefab;
+
     [SerializeField] private List<KeyController> keys;
     [SerializeField] private Transform keyParent;
 
@@ -21,10 +22,11 @@ public class KeyManager : MonoBehaviour
 
     [SerializeField] private float perfectKeyDistance;
     [SerializeField] private int perfectScore;
-
     [SerializeField] private float allowKeyPress;
+    [Header("Scoring")]
     [SerializeField] private int passableScore;
-    [SerializeField] private int punishmentScore;
+    [SerializeField] private float punishmentScore;
+    [SerializeField] private float itemCollisionScore;
 
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private Image satisfactionBar;
@@ -32,14 +34,17 @@ public class KeyManager : MonoBehaviour
     [SerializeField] private Color[] barColors;
 
     private float lastSpawnTime = 0;
-    private int currentStage;
+    public int currentStage { get; private set; }
     private KeyController currentKey;
 
     public int Score { get; private set; } = 100;
 
+    public static KeyManager Instance { get; private set; }
+
     private void Awake()
     {
         keys = new List<KeyController>();
+        Instance = this;
     }
 
     private void Start()
@@ -50,8 +55,8 @@ public class KeyManager : MonoBehaviour
     private void Update()
     {
         var gameStage = gameStages[currentStage];
-        
-        if (lastSpawnTime +  gameStage.spawnRate < Time.time)
+
+        if (lastSpawnTime + gameStage.spawnRate < Time.time)
         {
             SpawnKey();
         }
@@ -94,7 +99,7 @@ public class KeyManager : MonoBehaviour
             else if (leadingKey.selfRef.position.x < checkPoint.position.x)
             {
                 leadingKey.TooLate();
-                UpdateScore(punishmentScore);
+                UpdateScore((int)Mathf.Floor(Score * punishmentScore));
                 RemoveKey(leadingKey);
             }
         }
@@ -158,6 +163,11 @@ public class KeyManager : MonoBehaviour
         }
     }
 
+    public void ItemDropped()
+    {
+        UpdateScore((int)(Score * itemCollisionScore));
+    }
+
     private void CheckKeyValue(KeyValue val)
     {
         if (currentKey.value != val) return;
@@ -188,8 +198,8 @@ public class KeyManager : MonoBehaviour
         scoreText.text = Score + "";
         var fraction = 1f * Score / scoreMapper;
         satisfactionBar.fillAmount = fraction;
-        
-        if(fraction <= 0.3f)
+
+        if (fraction <= 0.3f)
         {
             satisfactionBar.color = barColors[0];
         }
@@ -201,7 +211,7 @@ public class KeyManager : MonoBehaviour
         {
             satisfactionBar.color = barColors[2];
         }
-        else 
+        else
         {
             satisfactionBar.color = barColors[3];
         }
