@@ -808,14 +808,27 @@ MonoBehaviour:
   punishmentScore: -0.1
   itemCollisionScore: -0.1
   scoreText: {fileID: 302696646}
-  satisfactionBar: {fileID: 73264314}
-  barColors:
-  - {r: 1, g: 0, b: 0, a: 1}
-  - {r: 1, g: 0.4941396, b: 0, a: 1}
-  - {r: 1, g: 0.9648032, b: 0, a: 1}
-  - {r: 0.2274208, g: 1, b: 0, a: 1}
+  satisfactionBar: {fileID: 2139936632}
+  barSpites:
+  - {fileID: 21300000, guid: 54e5fe2999465dd46b9682c092689a3d, type: 3}
+  - {fileID: 21300000, guid: 15f2c33e89291b54b92ae07c3c61567f, type: 3}
+  - {fileID: 21300000, guid: fdd453e8e0abbd643b6e66921881e297, type: 3}
+  - {fileID: 21300000, guid: 7b6b9d1df917add43a6a3f5144fd1a8a, type: 3}
+  - {fileID: 21300000, guid: 4db3a68afc3d6314db455f4b564be7ee, type: 3}
+  emojis:
+  - {fileID: 1799421021}
+  - {fileID: 139541504}
+  - {fileID: 2033479521}
+  - {fileID: 843618166}
+  - {fileID: 1207586222}
+  blankEmoji:
+  - {fileID: 21300000, guid: f1055c1b1a7dac346b4bd1d43f423fd8, type: 3}
+  - {fileID: 21300000, guid: 7b5373a4fa02d624d8c6009169f45bf3, type: 3}
+  - {fileID: 21300000, guid: 7832710c2cca19d4a99953cc774d2cf6, type: 3}
+  - {fileID: 21300000, guid: bea44be49d289fc48af93f9faeb95c06, type: 3}
+  - {fileID: 21300000, guid: f6ea105de3d27114e87419bdf313a17d, type: 3}
   difficultyFactor: 1
-  lossingFraction: 0.45
+  lossingFraction: 0.499
 --- !u!1 &800191269
 GameObject:
   m_ObjectHideFlags: 0
@@ -2613,9 +2626,9 @@ RectTransform:
   m_Father: {fileID: 6846462327772538055}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 302.5, y: -142.665}
   m_SizeDelta: {x: 605, y: 285.33}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6846462328278321875
@@ -2799,7 +2812,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &6846462328465395090
 MonoBehaviour:
   m_ObjectHideFlags: 0

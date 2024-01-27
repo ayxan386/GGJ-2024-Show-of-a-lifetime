@@ -30,12 +30,15 @@ public class KeyManager : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private Image satisfactionBar;
-    [SerializeField] private Color[] barColors;
+    [SerializeField] private Sprite[] barSpites;
+    [SerializeField] private Image[] emojis;
+    [SerializeField] private Sprite[] blankEmoji;
     [SerializeField] private float difficultyFactor = 1f;
     [SerializeField] private float lossingFraction;
 
     private float lastSpawnTime = 0;
     public int currentStage { get; private set; }
+    public bool RoundEnded { get; set; }
     private KeyController currentKey;
 
     public int Score { get; private set; } = 100;
@@ -58,6 +61,7 @@ public class KeyManager : MonoBehaviour
 
     private void Update()
     {
+        if(RoundEnded) return;
         var gameStage = gameStages[currentStage];
 
         if (lastSpawnTime + gameStage.spawnRate / difficultyFactor < Time.time)
@@ -198,31 +202,20 @@ public class KeyManager : MonoBehaviour
 
     private void UpdateScore(int diff)
     {
+        if(RoundEnded) return;
+        
         Score += diff;
         RoundMaxScore = Mathf.Max(Score, RoundMaxScore);
         scoreText.text = "Max score: " + RoundMaxScore;
-        var fraction = 1f * Score / RoundMaxScore;
+        var fraction = 1f * Score / RoundMaxScore - lossingFraction;
         satisfactionBar.fillAmount = fraction;
 
-        if (fraction <= 0.3f)
-        {
-            satisfactionBar.color = barColors[0];
-        }
-        else if (fraction <= 0.6f)
-        {
-            satisfactionBar.color = barColors[1];
-        }
-        else if (fraction <= 0.8f)
-        {
-            satisfactionBar.color = barColors[2];
-        }
-        else
-        {
-            satisfactionBar.color = barColors[3];
-        }
+        UpdateEmojis(fraction);
+        
 
-        if (fraction <= lossingFraction)
+        if (fraction <= 0)
         {
+            RoundEnded = true;
             OnRoundEnd?.Invoke(RoundMaxScore);
         }
 
@@ -230,6 +223,25 @@ public class KeyManager : MonoBehaviour
         {
             difficultyFactor = Mathf.Pow(1.01f, (Score - 300) / 10);
         }
+    }
+
+    private void UpdateEmojis(float fraction)
+    {
+        var inc = 1f / barSpites.Length;
+        var currentOne = -1;
+        for (int i = 0; i < emojis.Length; i++)
+        {
+            emojis[i].sprite = blankEmoji[i];
+
+            if (inc * i <= fraction)
+            {
+                currentOne = i;
+            }
+        }
+
+        if(currentOne != -1)
+            emojis[currentOne].sprite = barSpites[currentOne];
+
     }
 }
 

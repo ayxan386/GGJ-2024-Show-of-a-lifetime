@@ -16,6 +16,5 @@ public class GameManager : MonoBehaviour
     {
         LeaderBoard.SetActive(true);
     }
-    // Update is called once per frame
 
 }
