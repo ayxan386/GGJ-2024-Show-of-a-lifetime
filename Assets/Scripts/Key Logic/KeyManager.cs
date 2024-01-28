@@ -36,10 +36,12 @@ public class KeyManager : MonoBehaviour
     [SerializeField] private Sprite[] blankEmoji;
     [SerializeField] private float difficultyFactor = 1f;
     [SerializeField] private float lossingFraction;
+    [SerializeField] private int winningCombo = 15;
 
     [Header("SFX")]
     [SerializeField] private AudioClip[] keySounds;
     [SerializeField] private CinematicPlayer endingScenePlayer;
+    [SerializeField] private CinematicPlayer winningPlayer;
     [SerializeField] private SpriteRenderer animatedCrowdRenderer;
     [SerializeField] private Sprite happyCrowd;
     [SerializeField] private Sprite angryCrowd;
@@ -69,6 +71,7 @@ public class KeyManager : MonoBehaviour
         UpdateScore(0);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        StartCoroutine(WinningCondition());
     }
 
     private void Update()
@@ -233,7 +236,6 @@ public class KeyManager : MonoBehaviour
         
         UpdateEmojis(satisfactionBar.fillAmount);
         
-
         if (fraction <= 0)
         {
             RoundEnded = true;
@@ -249,7 +251,18 @@ public class KeyManager : MonoBehaviour
     private IEnumerator EndRound()
     {
         yield return endingScenePlayer.PlayVideo();
-        // yield return new WaitForSeconds(1.5f);
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+        OnRoundEnd?.Invoke(RoundMaxScore);
+    }
+
+    private IEnumerator WinningCondition()
+    {
+        yield return new WaitUntil(() => satisfactionBar.fillAmount >= 1 && currentCombo > winningCombo);
+        RoundEnded = true;
+        yield return winningPlayer.PlayVideo();
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
         OnRoundEnd?.Invoke(RoundMaxScore);
     }
 
