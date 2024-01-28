@@ -7,7 +7,12 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        KeyManager.OnRoundEnd += EnableLeaderBoardPanel;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        if ( LeaderBoard != null)
+        {
+          KeyManager.OnRoundEnd += EnableLeaderBoardPanel;
+        }
     }
 
     private void OnDestroy()
@@ -17,6 +22,8 @@ public class GameManager : MonoBehaviour
 
     private void EnableLeaderBoardPanel(int score)
     {
-        LeaderBoard.SetActive(true);
+        //LeaderBoard.SetActive(true);
     }
+
+  
 }

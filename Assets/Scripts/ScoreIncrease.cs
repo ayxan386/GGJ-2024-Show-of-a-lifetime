@@ -4,6 +4,7 @@ public class ScoreIncrease : MonoBehaviour
 {
     int score = 0;
     [SerializeField] LeaderBoardManager leaderBoardManager;
+    [SerializeField]  MenuNavigator menuNavigator;
 
     void Start()
     {
@@ -18,10 +19,12 @@ public class ScoreIncrease : MonoBehaviour
     void OnRoundEnd(int score)
     {
         this.score = score;
+        menuNavigator.OpenNameInputPanel();
     }
 
     public void UpdateScore()
     {
         leaderBoardManager.AddScoreToLeaderboard(score);
+        menuNavigator.OpenLeaderBoardPanel();
     }
 }

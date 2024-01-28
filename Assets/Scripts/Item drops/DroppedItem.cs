@@ -4,6 +4,12 @@ public class DroppedItem : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D rb;
     [SerializeField] private Vector2 movementVector;
+    [SerializeField] Animator playerAnim;
+
+    private void Awake()
+    {
+        playerAnim = GameObject.FindGameObjectWithTag("Player").GetComponent<Animator>();
+    }
 
     public void SetSpeedMult(float newFactor)
     {
@@ -15,6 +21,7 @@ public class DroppedItem : MonoBehaviour
         if (other.transform.CompareTag("ItemDrop")) return;
         if (other.transform.CompareTag("Player"))
         {
+            playerAnim.SetTrigger("Hit");
             KeyManager.Instance.ItemDropped();
         }
 
