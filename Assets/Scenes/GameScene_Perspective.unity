@@ -1155,8 +1155,8 @@ Transform:
   m_Children:
   - {fileID: 1123198553}
   - {fileID: 1520385323}
-  - {fileID: 583553246}
   - {fileID: 1298599276}
+  - {fileID: 583553246}
   - {fileID: 428232812}
   - {fileID: 544932156}
   - {fileID: 1219619453}
@@ -2139,7 +2139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 8
-  mouseMoveSpeed: 0.4
+  mouseMoveSpeed: 0.6
   leftLimit: {fileID: 1686621496}
   rightLimit: {fileID: 28676782}
   mainCamera: {fileID: 839241006}
@@ -2694,7 +2694,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 511768700}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1298599277
 SpriteRenderer:
