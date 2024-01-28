@@ -2094,9 +2094,13 @@ MonoBehaviour:
   MainMenuPanel: {fileID: 388213734}
   SettingsPanel: {fileID: 841691972}
   CreditsPanel: {fileID: 1543109611}
+  NameInputPanel: {fileID: 0}
+  LeaderBoardPanel: {fileID: 0}
   menuFirstSelection: {fileID: 807770953}
   SettingsFirstSelection: {fileID: 313383332}
   CreditsfirstSelection: {fileID: 2132745084}
+  NamePanelFirsSelection: {fileID: 0}
+  LeaderBoardPanelFirsSelection: {fileID: 0}
 --- !u!1 &713559245
 GameObject:
   m_ObjectHideFlags: 0
@@ -2633,7 +2637,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: GameScene_Perspective
+          m_StringArgument: OpeningCinematic
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &807770956

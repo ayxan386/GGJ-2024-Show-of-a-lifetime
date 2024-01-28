@@ -172,7 +172,7 @@ VideoPlayer:
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
-  m_TargetTexture: {fileID: 8400000, guid: f64adb5357a8acd4b95f16c091ad1e25, type: 2}
+  m_TargetTexture: {fileID: 8400000, guid: 97e3afa0d1ddfab4babbe5d5b584f661, type: 2}
   m_TimeReference: 0
   m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: <noninit>
@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1697888055}
-  sceneName: MainMenu
+  sceneName: GameScene
 --- !u!4 &1298599277
 Transform:
   m_ObjectHideFlags: 0
@@ -462,7 +462,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2b5ebcc5187f3e47b3fb76c68e61783, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fileName: Opening-video.mov
+  fileName: BeginningCInematic.mp4
   playerRef: {fileID: 888431227}
 --- !u!114 &1697888056
 MonoBehaviour:
@@ -484,7 +484,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 8400000, guid: f64adb5357a8acd4b95f16c091ad1e25, type: 2}
+  m_Texture: {fileID: 8400000, guid: 97e3afa0d1ddfab4babbe5d5b584f661, type: 2}
   m_UVRect:
     serializedVersion: 2
     x: 0
