@@ -4,13 +4,14 @@ using UnityEngine.InputSystem;
 public class MouseMovement : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 5f;
+    [SerializeField] float mouseMoveSpeed = 5f;
     [SerializeField] private Transform leftLimit;
     [SerializeField] private Transform rightLimit;
     [SerializeField] private Camera mainCamera;
 
     private Vector2 mousePos;
     private Vector2 delta;
-    private bool isGamepad;
+    private bool isGamepad ;
     private Vector3 startPos;
 
     private void Start()
@@ -23,22 +24,7 @@ public class MouseMovement : MonoBehaviour
         var newPos = transform.position;
         Vector3 mouseWorldPos = GetMouseWorldPosition();
 
-        if (isGamepad)
-        {
-            newPos.x += delta.x * moveSpeed * Time.deltaTime;
-        }
-        else
-        {
-            if (mouseWorldPos != Vector3.zero)
-            {
-                newPos = Vector3.MoveTowards(transform.position, mouseWorldPos, moveSpeed);
-            }
-            //    var inWorldPos = mainCamera.ScreenToWorldPoint(mousePos);
-            //    inWorldPos.z = startPos.z;
-            //    inWorldPos.y = startPos.y;
-            //    newPos = Vector3.MoveTowards(transform.position, inWorldPos, moveSpeed);
-        }
-
+        newPos.x += delta.x * Time.deltaTime * (isGamepad ? moveSpeed : mouseMoveSpeed);
         newPos.x = Mathf.Clamp(newPos.x, leftLimit.position.x, rightLimit.position.x);
 
         transform.position = newPos;

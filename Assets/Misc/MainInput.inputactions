@@ -170,6 +170,17 @@
                     "action": "DeltaMove",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c756c70b-2ed6-485c-a082-de331cea36d7",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardAndMouse",
+                    "action": "DeltaMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }

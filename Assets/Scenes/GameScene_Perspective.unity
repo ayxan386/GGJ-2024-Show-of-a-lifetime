@@ -1777,6 +1777,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 8
+  mouseMoveSpeed: 0.4
   leftLimit: {fileID: 1686621496}
   rightLimit: {fileID: 28676782}
   mainCamera: {fileID: 839241006}
@@ -3220,19 +3221,7 @@ MonoBehaviour:
     m_ActionId: 63cc17bf-383a-4ab3-a23f-93a12c43ba52
     m_ActionName: Player/RightKey[/Keyboard/d]
   - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1066021981}
-        m_TargetAssemblyTypeName: MouseMovement, Assembly-CSharp
-        m_MethodName: OnMousePosPass
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_ActionId: 77946dcd-ca14-473b-ae16-2a34f10a4094
     m_ActionName: Player/MouseMove[/Mouse/position]
   - m_PersistentCalls:
