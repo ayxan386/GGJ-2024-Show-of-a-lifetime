@@ -6,6 +6,7 @@ public class playVideo : MonoBehaviour
 {
     // Start is called before the first frame update
     [SerializeField] CinematicPlayer player;
+    [SerializeField] string sceneName;
     void Start()
     {
         StartCoroutine(player.PlayVideo());
@@ -14,6 +15,10 @@ public class playVideo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        player.LoadSceneOnloopPointReached("MainMenu");
+        player.LoadSceneOnloopPointReached(sceneName);
     }
 }
+
+    
+        
+
