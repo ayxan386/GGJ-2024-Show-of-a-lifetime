@@ -39,8 +39,7 @@ public class KeyManager : MonoBehaviour
 
     [Header("SFX")]
     [SerializeField] private AudioClip[] keySounds;
-
-    [SerializeField] private Animator axeAnimator;
+    [SerializeField] private CinematicPlayer endingScenePlayer;
     
     private float lastSpawnTime = 0;
     public int currentStage { get; private set; }
@@ -244,8 +243,8 @@ public class KeyManager : MonoBehaviour
 
     private IEnumerator EndRound()
     {
-        axeAnimator.SetTrigger("fall");
-        yield return new WaitForSeconds(1.5f);
+        yield return endingScenePlayer.PlayVideo();
+        // yield return new WaitForSeconds(1.5f);
         OnRoundEnd?.Invoke(RoundMaxScore);
     }
 
