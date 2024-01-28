@@ -40,6 +40,9 @@ public class KeyManager : MonoBehaviour
     [Header("SFX")]
     [SerializeField] private AudioClip[] keySounds;
     [SerializeField] private CinematicPlayer endingScenePlayer;
+    [SerializeField] private SpriteRenderer animatedCrowdRenderer;
+    [SerializeField] private Sprite happyCrowd;
+    [SerializeField] private Sprite angryCrowd;
     
     private float lastSpawnTime = 0;
     public int currentStage { get; private set; }
@@ -64,6 +67,8 @@ public class KeyManager : MonoBehaviour
     private void Start()
     {
         UpdateScore(0);
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     private void Update()
