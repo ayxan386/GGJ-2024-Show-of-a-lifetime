@@ -20,6 +20,7 @@ public class CinematicPlayer : MonoBehaviour
         playerRef.Play();
         playerRef.loopPointReached += OnloopPointReached;
         yield return new WaitUntil(() => videoEnded);
+
     }
 
     private void OnloopPointReached(VideoPlayer source)

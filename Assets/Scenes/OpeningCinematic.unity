@@ -293,7 +293,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1697888055}
-  sceneName: GameScene
+  sceneName: GameScene_Perspective
 --- !u!4 &1298599277
 Transform:
   m_ObjectHideFlags: 0
