@@ -46,7 +46,7 @@ public class KeyManager : MonoBehaviour
     
     private float lastSpawnTime = 0;
     public int currentStage { get; private set; }
-    public bool RoundEnded { get; set; }
+    public bool RoundEnded { get; set; } = true;
     private KeyController currentKey;
 
     public int Score { get; private set; } = 100;
@@ -230,7 +230,7 @@ public class KeyManager : MonoBehaviour
         scoreText.text = "Max score: " + RoundMaxScore;
         var fraction = 1f * Score / RoundMaxScore - lossingFraction;
         satisfactionBar.fillAmount = fraction + 0.05f * currentCombo;
-
+        
         UpdateEmojis(satisfactionBar.fillAmount);
         
 
@@ -266,6 +266,8 @@ public class KeyManager : MonoBehaviour
                 currentOne = i;
             }
         }
+
+        animatedCrowdRenderer.sprite = fraction > 0.75f ? happyCrowd : angryCrowd;
 
         if(currentOne != -1)
             emojis[currentOne].sprite = barSpites[currentOne];
