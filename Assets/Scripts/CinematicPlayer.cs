@@ -1,6 +1,8 @@
 using System.Collections;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 
 public class CinematicPlayer : MonoBehaviour
@@ -25,4 +27,14 @@ public class CinematicPlayer : MonoBehaviour
         videoEnded = true;
         gameObject.SetActive(false);
     }
+    public void LoadSceneOnloopPointReached(string sceneName)
+    {
+        if(videoEnded)
+        {
+            SceneManager.LoadScene(sceneName);
+        }
+        
+    }
+
+
 }
