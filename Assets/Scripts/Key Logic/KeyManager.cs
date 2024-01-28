@@ -39,6 +39,10 @@ public class KeyManager : MonoBehaviour
     [SerializeField] private int winningCombo = 15;
 
     [Header("SFX")]
+    [SerializeField] private AudioSource angrySounds;
+    [SerializeField] private AudioSource happySounds;
+    [SerializeField] private AudioClip[] lossSoundClips;
+    [SerializeField] private AudioSource scoreLossSound;
     [SerializeField] private AudioClip[] keySounds;
     [SerializeField] private CinematicPlayer endingScenePlayer;
     [SerializeField] private CinematicPlayer winningPlayer;
@@ -226,6 +230,11 @@ public class KeyManager : MonoBehaviour
     private void UpdateScore(int diff)
     {
         if(RoundEnded) return;
+
+        if (diff < 0)
+        {
+            scoreLossSound.PlayOneShot(lossSoundClips[Random.Range(0, lossSoundClips.Length)]);
+        }
         
         Score += diff;
         RoundMaxScore = Mathf.Max(Score, RoundMaxScore);
@@ -250,6 +259,8 @@ public class KeyManager : MonoBehaviour
 
     private IEnumerator EndRound()
     {
+        angrySounds.Stop();
+        happySounds.Stop();
         yield return endingScenePlayer.PlayVideo();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -260,6 +271,8 @@ public class KeyManager : MonoBehaviour
     {
         yield return new WaitUntil(() => satisfactionBar.fillAmount >= 1 && currentCombo > winningCombo);
         RoundEnded = true;
+        angrySounds.Stop();
+        happySounds.Stop();
         yield return winningPlayer.PlayVideo();
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
@@ -280,7 +293,18 @@ public class KeyManager : MonoBehaviour
             }
         }
 
-        animatedCrowdRenderer.sprite = fraction > 0.75f ? happyCrowd : angryCrowd;
+        if (fraction > 0.75f)
+        {
+            if(!happySounds.isPlaying)
+                happySounds.Play();
+            animatedCrowdRenderer.sprite = happyCrowd;
+        }
+        else
+        {
+            if(!angrySounds.isPlaying)
+                angrySounds.Play();
+            animatedCrowdRenderer.sprite = angryCrowd;
+        }
 
         if(currentOne != -1)
             emojis[currentOne].sprite = barSpites[currentOne];
